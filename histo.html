@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>D3 Tutorial</title>
+      <script src="https://d3js.org/d3.v3.js"></script>
+   </head>
+   <body>
+
+      <div id="variables">
+            <!<label>Sample:</label>
+            <input type="number" class="variable" id="numDataPoints" placeholder="n = 20" fun="dataPoints = update_dataPoints(true);">
+            <input type="number" class="variable" id="normalMean" placeholder="μ = 0">
+            <input type="number" class="variable" id="normalStdDev" placeholder="σ = 3">
+            </br>
+
+            <label>Uniform:</label>
+            <input type="number" class="variable" id="numDataPoints" placeholder="n = 20" fun="dataPoints = update_dataPoints(true);">
+            <input type="number" class="variable" id="UniformMin" placeholder="min = 0">
+            <input type="number" class="variable" id="UniformMax" placeholder="max = 3">
+            </br>
+
+            <label>Exponential:</label>
+            <input type="number" class="variable" id="numDataPoints" placeholder="n = 20" fun="dataPoints = update_dataPoints(true);">
+            <input type="number" class="variable" id="Expolambda" placeholder="lambda = 2">
+            </br>
+
+            <label>Replacement</label>
+            <input type="text" class="variable" id="numDataPoints" placeholder="yes/no" fun="dataPoints = update_dataPoints(true);">
+            </br>
+      </div>
+
+   	<!-- Adding button -->
+   	<button type="button" onclick="showHisto()">Click here</button>
+   	<div id="btn"></br></div>
+
+   	<script type="text/javascript">
+   		d3.select("body").append("p").text("Click the button above to show the histogram");
+   		
+   		var myBtn = d3.select("#btn");
+   		
+   		var showHisto = function(){
+   		//Create an array of first 100 numbers
+   		var a = [];
+   		for (var i = 1; i <=100; i++) { a.push(i); }
+		var n;
+		var data_values=[];
+
+		//Store random 20 numbers in data_values
+		for (n=1; n<=20; ++n)
+		{
+  			var i = Math.floor((Math.random() * (100-n)) + 1);
+  			data_values.push(a[i]);
+  			a[i] = a[100-n];
+		}
+
+   		var svg = d3.select("body").append("svg").attr({"width":450,"height":400});
+
+   		var bars = svg.selectAll("rect").data(data_values).enter().append("rect").attr("width","25px").attr("height", function(d){ return d*5; }).on("mouseover" , function(dd) {d3.select(event.currentTarget).style("fill", "orange");})
+
+   		bars.attr("x", function(d,i){ return i*25; });
+   		bars.attr("y", function(d){ return 400-d*5; });
+   		bars.attr("fill", "steelblue");
+
+    }
+
+   	</script>
+
+   </body>
+</html>
+
